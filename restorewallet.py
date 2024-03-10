@@ -1,11 +1,12 @@
 from bitcoinlib.wallets import Wallet, wallet_delete_if_exists
-from bitcoinlib.transactions import Transaction, Output
+from bip_utils import Bip39SeedGenerator
 import shlex
 import sys
 import os
 from bitcoinlib.keys import HDKey
 from bitcoinlib.encoding import to_hexstring
 from bitcoinlib.mnemonic import Mnemonic
+from utils import get_db_url
 
 if __name__ == '__main__':
 
@@ -20,11 +21,16 @@ if __name__ == '__main__':
         print("Invalid number of arguments")
         sys.exit(1)
     
-    wallet = Wallet.create(wallet_name, keys=mnemonic_phrase, network=os.getenv("BTC_NETWORK", "testnet"), witness_type='segwit')
+    wallet = Wallet.create(wallet_name, keys=mnemonic_phrase, network=os.getenv("BTC_NETWORK", "testnet"), witness_type='segwit', db_uri=get_db_url())
+
+    # print the private key from the mnemonic
+    seed_bytes = Bip39SeedGenerator(mnemonic_phrase).Generate()
+    master_key = HDKey.from_seed(seed_bytes, network="bitcoin")
 
     # Display some information about the wallet
     print("Wallet Info:")
     print("Mnemonic Phrase:", mnemonic_phrase)
+    print("Private Key:", master_key)
     print("ID:", wallet.wallet_id)
     print("Name:", wallet.name)
     print("Network:", wallet.network.name)

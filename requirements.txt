@@ -1,3 +1,4 @@
 bip_utils
 bitcoinlib
 pycoin
+sqlcipher3-binary
