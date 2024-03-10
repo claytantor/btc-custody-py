@@ -1,4 +1,4 @@
-from utils import get_db_url, encrypt_db, decrypt_db
+from utils import get_db_url, encrypt_db, decrypt_db, overwrite_file_with_random_data
 import os
 
 if __name__ == '__main__':
@@ -13,6 +13,9 @@ if __name__ == '__main__':
 
     # encrypt the db
     decrypt_db()
+
+
+
 
     # delete the original db
     os.remove(encrypted_db_file)

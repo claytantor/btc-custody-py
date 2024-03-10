@@ -9,6 +9,7 @@ import os
 
 import hashlib
 import hmac
+import random
 
 # load an encrypted database
 def get_db_url_encrypted():
@@ -174,3 +175,15 @@ def decrypt_binary_file(input_file, output_file, password):
     # Write the decrypted binary data to the output file
     with open(output_file, 'wb') as f:
         f.write(plaintext)
+
+def overwrite_file_with_random_data(file_path):
+    # Open the file in write mode
+    with open(file_path, 'wb') as f:
+        # Get the size of the file
+        file_size = os.path.getsize(file_path)
+        
+        # Generate random bytes equal to the size of the file
+        random_data = bytearray(random.getrandbits(8) for _ in range(file_size))
+        
+        # Write the random data to the file
+        f.write(random_data)
