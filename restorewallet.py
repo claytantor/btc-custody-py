@@ -11,7 +11,14 @@ if __name__ == '__main__':
 
     # the mnemonic phrase is passed as a command line argument
     wallet_name = sys.argv[1]
-    mnemonic_phrase = " ".join(sys.argv[2:26])
+
+    if len(sys.argv) == 26:
+        mnemonic_phrase = " ".join(sys.argv[2:26])
+    elif len(sys.argv) == 14:
+        mnemonic_phrase = " ".join(sys.argv[2:14])
+    else:
+        print("Invalid number of arguments")
+        sys.exit(1)
     
     wallet = Wallet.create(wallet_name, keys=mnemonic_phrase, network=os.getenv("BTC_NETWORK", "testnet"), witness_type='segwit')
 
