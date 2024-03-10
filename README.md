@@ -12,18 +12,18 @@ Generate a new wallet and store the mnemonic in a safe place.
 
 ## balance
 Check the balance of a wallet
-`DB_PASSWORD=soopersecret BTC_NETWORK=bitcoin python balance.py py_wallet_2`
+`BTC_NETWORK=bitcoin python balance.py py_wallet_2`
 
 ## restore wallet
 Restore a wallet from a mnemonic
-`DB_PASSWORD=soopersecret BTC_NETWORK=bitcoin python restorewallet.py py_wallet_2 exhaust analyst liar seat access flat tunnel december army speed foam route wrist guess behind vacant output orient bless cradle garment corn limb plug`
+`BTC_NETWORK=bitcoin python restorewallet.py py_wallet_2 exhaust analyst liar seat access flat tunnel december army speed foam route wrist guess behind vacant output orient bless cradle garment corn limb plug`
 
 ## sendcoin
 Send some coin to an address
-`DB_PASSWORD=soopersecret BTC_NETWORK=bitcoin python sendcoin.py bc1qd7w9zsrmgf8sgqpunntdyaca99yk5hqd3vdrwx 0.0001 py_wallet_2`
+`BTC_NETWORK=bitcoin python sendcoin.py bc1qd7w9zsrmgf8sgqpunntdyaca99yk5hqd3vdrwx 0.0001 py_wallet_2`
 
 ## get wallet address
-`DB_PASSWORD=soopersecret BTC_NETWORK=bitcoin python getaddr.py py_wallet_2`
+`BTC_NETWORK=bitcoin python getaddr.py py_wallet_2`
 
 # encrypt the database
 -rw-r--r-- 1 clay clay 139264 Mar 10 01:01 bcl.db
