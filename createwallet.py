@@ -39,6 +39,9 @@ def create_mnemonic(word_count:int):
 
 if __name__ == '__main__':
 
+    
+
+
     # the mnemonic phrase is passed as a command line argument
     wallet_name = sys.argv[1]
 

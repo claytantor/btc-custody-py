@@ -8,7 +8,7 @@ NOTE: The bincoinlib library uses a local wallet database to relate the wallet n
 
 ## create wallet
 Generate a new wallet and store the mnemonic in a safe place.
-`DB_PASSWORD=soopersecret BTC_NETWORK=bitcoin python createwallet.py py_wallet_1 12`
+`BTC_NETWORK=bitcoin python createwallet.py py_wallet_1 12`
 
 ## balance
 Check the balance of a wallet
@@ -24,4 +24,11 @@ Send some coin to an address
 
 ## get wallet address
 `DB_PASSWORD=soopersecret BTC_NETWORK=bitcoin python getaddr.py py_wallet_2`
+
+# encrypt the database
+-rw-r--r-- 1 clay clay 139264 Mar 10 01:01 bcl.db
+`DB_PASSWORD=soopersecret python encryptdb.py`
+
+# decrypt the database
+`DB_PASSWORD=soopersecret python decryptdb.py`
 
