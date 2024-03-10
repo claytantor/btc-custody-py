@@ -1,4 +1,4 @@
-from bitcoinlib.wallets import Wallet, wallet_delete_if_exists
+from bitcoinlib.wallets import Wallet, wallet_exists
 from bip_utils import Bip39SeedGenerator
 import shlex
 import sys
@@ -12,6 +12,11 @@ if __name__ == '__main__':
 
     # the mnemonic phrase is passed as a command line argument
     wallet_name = sys.argv[1]
+
+    # Create a wallet for the sender
+    if  wallet_exists(wallet_name, db_uri=get_db_url()): 
+        print("Wallet exists")
+        exit(1)
 
     if len(sys.argv) == 26:
         mnemonic_phrase = " ".join(sys.argv[2:26])

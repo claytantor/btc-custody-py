@@ -1,5 +1,5 @@
 from bip_utils import Bip39MnemonicGenerator, Bip39WordsNum, Bip39SeedGenerator
-from bitcoinlib.wallets import Wallet, wallet_delete_if_exists
+from bitcoinlib.wallets import Wallet, wallet_delete_if_exists, wallet_exists
 from bitcoinlib.keys import HDKey
 import sys
 import os
@@ -41,6 +41,11 @@ if __name__ == '__main__':
 
     # the mnemonic phrase is passed as a command line argument
     wallet_name = sys.argv[1]
+
+    # Create a wallet for the sender
+    if  wallet_exists(wallet_name, db_uri=get_db_url()): 
+        print("Wallet exists")
+        exit(1)
 
      # the number of words in the mnemonic phrase
     word_count = sys.argv[2]
