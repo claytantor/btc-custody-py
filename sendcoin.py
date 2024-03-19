@@ -2,7 +2,7 @@ from bitcoinlib.wallets import Wallet, wallet_delete_if_exists, wallet_exists
 from bitcoinlib.transactions import Transaction, Output
 import sys
 import os
-from utils import get_db_url
+from utils import calculate_fee_rate, get_db_url
 
 if __name__ == '__main__':
     # Define sender and recipient information
@@ -10,6 +10,10 @@ if __name__ == '__main__':
     recipient_address = sys.argv[1]
     amount_to_send_btc:float = float(f'{sys.argv[2]}')  # Amount in BTC
     wallet_name = sys.argv[3]
+    if len(sys.argv) > 4:
+        speed = sys.argv[4]
+    else:
+        speed = "fastest"
 
     print("Recipient Address:", recipient_address)
     print("Amount to Send BTC:", amount_to_send_btc)
@@ -23,29 +27,17 @@ if __name__ == '__main__':
         exit(1)
 
     wallet = Wallet(wallet_name, db_uri=get_db_url())
-    # utxos = wallet.utxos_update()
-    # print("UTXOs:", utxos)
-    # wallet.info()
-
-    # wallet_balance = wallet.balance(network=os.getenv("BTC_NETWORK", "testnet"))
-    # print("Wallet Balance:", wallet_balance)
-
-    # if(amount_to_send_satoshi > wallet_balance):
-    #     print("Insufficient funds")
-    #     exit(1)
-    
-    # txid = wallet.send_to(recipient_address, amount_to_send_satoshi, offline=False)
-    # print(f"Transaction ID: {txid}")
-
-    forward_fee=1024
+    forward_fee=calculate_fee_rate(speed=speed)
 
     for key in wallet.keys(network=os.getenv("BTC_NETWORK", "testnet")):
         if key.balance:
             t = wallet.send_to(to_address=recipient_address,
                                network=os.getenv("BTC_NETWORK", "testnet"),
                                amount=int(key.balance-forward_fee),
-                               fee=forward_fee)
-            print(f"Transaction ID: {t.id}")
+                               fee=forward_fee,
+                               offline=False)
+            
+            print(f"Transaction {t}")
 
 
 

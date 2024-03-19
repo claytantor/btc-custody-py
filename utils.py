@@ -9,6 +9,7 @@ import os
 import hashlib
 import hmac
 import random
+from bitcoinlib.wallets import Wallet
 
 def get_db_url():
 
@@ -165,3 +166,46 @@ def overwrite_file_with_random_data(file_path):
         
         # Write the random data to the file
         f.write(random_data)
+
+def calculate_fee_rate_mempool(string = "fastest"):
+    import requests
+    response = requests.get("https://mempool.space/api/v1/fees/recommended")
+    if response.status_code != 200:
+        print("Error getting fee rate")
+        return 0
+    data = response.json()
+    if string == "fastest":
+        return data["fastestFee"]
+    elif string == "half_hour":
+        return data["halfHourFee"]
+    elif string == "hour":
+        return data["hourFee"]
+    else:
+        return 0
+    
+def calculate_fee_rate(speed = "fastest"):
+
+    # Estimate transaction fee for different fee rates
+    fee_rate_6_sat_per_vb = 6
+    fee_rate_9_sat_per_vb = 9
+    fee_rate_13_sat_per_vb = 13
+    fee_rate_20_sat_per_vb = 20
+    fee_rate_30_sat_per_vb = 30
+
+    # Calculate fee in satoshis for each fee rate
+    fee_6_sat_per_vb = Wallet.estimate_fee_per_kb(fee_rate_6_sat_per_vb)
+    fee_9_sat_per_vb = Wallet.estimate_fee_per_kb(fee_rate_9_sat_per_vb)
+    fee_13_sat_per_vb = Wallet.estimate_fee_per_kb(fee_rate_13_sat_per_vb)
+    fee_20_sat_per_vb = Wallet.estimate_fee_per_kb(fee_rate_20_sat_per_vb)
+    fee_30_sat_per_vb = Wallet.estimate_fee_per_kb(fee_rate_30_sat_per_vb)
+
+    rates = {
+        "economy": fee_6_sat_per_vb,
+        "slow": fee_9_sat_per_vb,
+        "regular": fee_13_sat_per_vb,
+        "fast": fee_20_sat_per_vb,
+        "fastest": fee_30_sat_per_vb
+
+    }
+
+    return rates[speed]
