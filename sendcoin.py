@@ -23,18 +23,30 @@ if __name__ == '__main__':
         exit(1)
 
     wallet = Wallet(wallet_name, db_uri=get_db_url())
-    utxos = wallet.utxos_update()
-    print("UTXOs:", utxos)
-    wallet.info()
+    # utxos = wallet.utxos_update()
+    # print("UTXOs:", utxos)
+    # wallet.info()
 
-    wallet_balance = wallet.balance(network=os.getenv("BTC_NETWORK", "testnet"))
-    print("Wallet Balance:", wallet_balance)
+    # wallet_balance = wallet.balance(network=os.getenv("BTC_NETWORK", "testnet"))
+    # print("Wallet Balance:", wallet_balance)
 
-    if(amount_to_send_satoshi > wallet_balance):
-        print("Insufficient funds")
-        exit(1)
+    # if(amount_to_send_satoshi > wallet_balance):
+    #     print("Insufficient funds")
+    #     exit(1)
     
-    txid = wallet.send_to(recipient_address, amount_to_send_satoshi, offline=False)
-    print(f"Transaction ID: {txid}")
+    # txid = wallet.send_to(recipient_address, amount_to_send_satoshi, offline=False)
+    # print(f"Transaction ID: {txid}")
+
+    forward_fee=1024
+
+    for key in wallet.keys(network=os.getenv("BTC_NETWORK", "testnet")):
+        if key.balance:
+            t = wallet.send_to(to_address=recipient_address,
+                               network=os.getenv("BTC_NETWORK", "testnet"),
+                               amount=int(key.balance-forward_fee),
+                               fee=forward_fee)
+            print(f"Transaction ID: {t.id}")
+
+
 
 
