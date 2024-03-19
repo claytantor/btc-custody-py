@@ -205,7 +205,6 @@ def calculate_fee_rate(speed = "fastest"):
         "regular": fee_13_sat_per_vb,
         "fast": fee_20_sat_per_vb,
         "fastest": fee_30_sat_per_vb
-
     }
 
     return rates[speed]

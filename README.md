@@ -20,7 +20,7 @@ Restore a wallet from a mnemonic
 
 ## sendcoin
 Send some coin to an address
-`BTC_NETWORK=bitcoin python sendcoin.py bc1qd7w9zsrmgf8sgqpunntdyaca99yk5hqd3vdrwx 0.0001 py_wallet_2`
+`BTC_NETWORK=bitcoin python sendcoin.py bc1qd7w9zsrmgf8sgqpunntdyaca99yk5hqd3vdrwx 0.0001 py_wallet_2 fast`
 
 ## get wallet address
 `BTC_NETWORK=bitcoin python getaddr.py py_wallet_2`
