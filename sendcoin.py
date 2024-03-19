@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
     # Create a wallet for the sender
     if not wallet_exists(wallet_name): 
-        print("Wallet does not exist")
+        print("Wallet does not exist: {wallet_name}")
         exit(1)
 
     wallet = Wallet(wallet_name)
