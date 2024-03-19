@@ -23,7 +23,8 @@ if __name__ == '__main__':
         exit(1)
 
     wallet = Wallet(wallet_name, db_uri=get_db_url())
-    wallet.scan()
+    utxos = wallet.utxos_update()
+    print("UTXOs:", utxos)
     wallet.info()
 
     wallet_balance = wallet.balance(network=os.getenv("BTC_NETWORK", "testnet"))
