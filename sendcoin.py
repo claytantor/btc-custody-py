@@ -18,7 +18,7 @@ if __name__ == '__main__':
     print("Amount to Send Satoshi:", amount_to_send_satoshi)
 
     # Create a wallet for the sender
-    if not wallet_exists(wallet_name): 
+    if not wallet_exists(wallet_name, db_uri=get_db_url()): 
         print("Wallet does not exist: {wallet_name}")
         exit(1)
 
