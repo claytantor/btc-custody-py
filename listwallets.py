@@ -7,7 +7,7 @@ if __name__ == '__main__':
     """
     This script lists all wallets in the wallet directory.
     """
-    wallets = Wallet.all()
+    wallets = Wallet.list()
     print("Wallets:")
     for wallet in wallets:
         print(wallet.name)
