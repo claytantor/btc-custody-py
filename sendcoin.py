@@ -2,6 +2,7 @@ from bitcoinlib.wallets import Wallet, wallet_delete_if_exists, wallet_exists
 from bitcoinlib.transactions import Transaction, Output
 import sys
 import os
+from utils import get_db_url
 
 if __name__ == '__main__':
     # Define sender and recipient information
@@ -21,7 +22,7 @@ if __name__ == '__main__':
         print("Wallet does not exist: {wallet_name}")
         exit(1)
 
-    wallet = Wallet(wallet_name)
+    wallet = Wallet(wallet_name, db_uri=get_db_url())
     wallet.scan()
     wallet.info()
 

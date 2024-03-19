@@ -1,44 +1,38 @@
 from bip_utils import Bip39MnemonicGenerator, Bip39WordsNum, Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
+from bitcoinlib.wallets import Wallet, wallet_delete_if_exists
+from bitcoinlib.transactions import Transaction, Output
+import sys
 
-# # Generate a 12-word mnemonic
-# mnemonic = Bip39MnemonicGenerator().FromWordsNumber(Bip39WordsNum.WORDS_NUM_24)
-
-# print("Mnemonic:", mnemonic)
-
-# seed = Bip39SeedGenerator(mnemonic).Generate()
-
-# # Create a Bip44 object (for Bitcoin) and derive the account keys
-# bip44_mst_ctx = Bip44.FromSeed(seed, Bip44Coins.BITCOIN)
-# bip44_acc_ctx = bip44_mst_ctx.Purpose().Coin().Account(0)
-
-# # Derive the first address (index 0)
-# bip44_chg_ctx = bip44_acc_ctx.Change(Bip44Changes.CHAIN_EXT)
-# bip44_addr_ctx = bip44_chg_ctx.AddressIndex(0)
-
-# print("Private Key:", bip44_addr_ctx.PrivateKey().ToWif())
-# print("Public Key:", bip44_addr_ctx.PublicKey().RawCompressed().ToHex())
-# print("Address:", bip44_addr_ctx.PublicKey().ToAddress())
-import os
 from bitcoinlib.keys import HDKey
 from bitcoinlib.encoding import to_hexstring
 
 from bitcoinlib.mnemonic import Mnemonic
 
-def generate_random_private_key():
-    # Generate 32 bytes (256 bits) of random data
-    return os.urandom(32)
 
-def create_mnemonic_from_private_key(private_key):
-    # Create a mnemonic phrase from the provided private key
-    mnemonic = Mnemonic().to_mnemonic(private_key)
-    return mnemonic
+if __name__ == '__main__':
 
-# Generate a random private key
-random_private_key = generate_random_private_key()
+    # the mnemonic phrase is passed as a command line argument
+    wallet_name = sys.argv[1]
 
-# Create a mnemonic from the private key
-mnemonic_phrase = create_mnemonic_from_private_key(random_private_key)
+    # the number of words in the mnemonic phrase
+    word_count = sys.argv[2]
 
+    word_count = int(word_count)
+    # wordcount must be 12 or 24 
+    if word_count != 12 and word_count != 24:
+        print("Word count must be 12 or 24")
+        sys.exit(1)
 
+    if word_count == 12:
+        # Generate a 12-word mnemonic
+        mnemonic = Bip39MnemonicGenerator().FromWordsNumber(Bip39WordsNum.WORDS_NUM_12)
+    else:
+        # Generate a 24-word mnemonic
+        mnemonic = Bip39MnemonicGenerator().FromWordsNumber(Bip39WordsNum.WORDS_NUM_24)
 
-print("Mnemonic Phrase:", mnemonic_phrase)
+    # print the private key from the mnemonic
+    seed_bytes = Bip39SeedGenerator(mnemonic).Generate()
+    master_key = HDKey.from_seed(seed_bytes, network="bitcoin")
+
+    print("Mnemonic:", mnemonic)
+    print("Master key:", master_key)
