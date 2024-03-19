@@ -32,3 +32,13 @@ Send some coin to an address
 # decrypt the database
 `DB_PASSWORD=soopersecret python decryptdb.py`
 
+## list wallets
+```bash
+clw --database bcl.db
+Command Line Wallet - BitcoinLib 0.6.14
+
+BitcoinLib wallets:
+[1] py_wallet_2 (bitcoin) 
+[2] py_wallet_3 (bitcoin) 
+```
+
