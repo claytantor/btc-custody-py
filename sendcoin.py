@@ -34,10 +34,9 @@ if __name__ == '__main__':
             t = wallet.send_to(to_address=recipient_address,
                                network=os.getenv("BTC_NETWORK", "testnet"),
                                amount=int(key.balance-forward_fee),
-                               fee=forward_fee,
-                               offline=False)
-            
-            print(f"Transaction {t}")
+                               fee=forward_fee, offline=False)
+            if t:
+                print(f"Transaction: {t}")
 
 
 
